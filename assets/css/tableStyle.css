@@ -1,0 +1,75 @@
+/* Add these styles to your existing CSS or in a new stylesheet */
+
+#table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#table thead th,
+#table tbody td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+#table thead th {
+    background-color: #3498db;
+    color: #fff;
+}
+
+#table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+#table_wrapper {
+    margin-top: 20px;
+}
+
+#table_paginate {
+    float: right;
+}
+
+#table_info {
+    margin-top: 5px;
+}
+
+/* Custom styling for DataTable buttons (optional) */
+.dt-buttons {
+    margin-bottom: 20px;
+}
+
+/* Style for search input (optional) */
+.dataTables_filter input {
+    width: 300px;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+
+#table_paginate .pagination {
+    margin: 0;
+}
+
+#table_paginate .pagination li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#table_paginate .pagination li a, #table_paginate .pagination li span {
+    padding: 5px 10px;
+    border: 1px solid #3498db;
+    color: #3498db;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+#table_paginate .pagination li a:hover, #table_paginate .pagination li.active a, #table_paginate .pagination li.active span {
+    background-color: #3498db;
+    color: #fff;
+}
