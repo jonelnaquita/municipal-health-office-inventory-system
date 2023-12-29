@@ -104,8 +104,9 @@ if (isset($_GET['id'])) {
 						$transactions = $conn->query("SELECT ir.id, p.sub_category_id, m.sub_category_name, m.brand_name, ir.quantity, ir.availed_date
 										FROM item_requested ir
 										JOIN product_list p ON ir.product_id = p.id
+										JOIN patient_list pl ON ir.patient_id = pl.id
 										JOIN manage_sub_category m ON p.sub_category_id = m.id
-										WHERE ir.id =" . $_GET['id']);
+										WHERE pl.id =" . $_GET['id']);
 
 						$counter = 1;
 						while ($row = $transactions->fetch_assoc()) {
