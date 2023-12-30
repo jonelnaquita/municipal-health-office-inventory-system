@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 09:58 PM
+-- Generation Time: Dec 30, 2023 at 07:38 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,7 +55,9 @@ INSERT INTO `category_list` (`id`, `name`) VALUES
 CREATE TABLE `customer_list` (
   `id` int(30) NOT NULL,
   `product_id` text NOT NULL,
-  `name_patient` text NOT NULL,
+  `firstname` text NOT NULL,
+  `middleinitial` varchar(2) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
   `contact` varchar(30) NOT NULL,
   `address` text NOT NULL,
   `age` int(50) NOT NULL,
@@ -70,37 +72,62 @@ CREATE TABLE `customer_list` (
 -- Dumping data for table `customer_list`
 --
 
-INSERT INTO `customer_list` (`id`, `product_id`, `name_patient`, `contact`, `address`, `age`, `birth_day`, `medicine_prescription`, `quantity`, `date_encode`, `year`) VALUES
-(73, '118', 'Anna', '09875784546', 'Brgy. Anastacia', 16, '2007-02-20', '', 1, '2023-09-20', 0),
-(77, '37', 'danie', '97656456463', 'Brgy. Ayusan II', 23, '2023-09-18', 'Medicine requires prescription', 15, '2023-09-21', 0),
-(79, '38', 'johann', '09673620161', 'Brgy. Anastacia', 20, '2003-10-29', 'Medicine requires prescription', 5, '2023-09-26', 0),
-(83, '', 'Nisha Arrogancia', '09500558967', 'SPC', 23, '2023-06-13', '', 0, '0000-00-00', 0),
-(86, '118', 'Anna', '09875784546', 'Brgy. Anastacia', 16, '2007-02-20', '', 0, '0000-00-00', 0);
+INSERT INTO `customer_list` (`id`, `product_id`, `firstname`, `middleinitial`, `lastname`, `contact`, `address`, `age`, `birth_day`, `medicine_prescription`, `quantity`, `date_encode`, `year`) VALUES
+(73, '118', 'Anna', '', '', '09875784546', 'Brgy. Anastacia', 16, '2007-02-20', '', 1, '2023-09-20', 0),
+(77, '23', 'danie', '', '', '97656456463', 'Brgy. Ayusan II', 23, '2023-09-18', 'Medicine requires prescription', 15, '2023-09-21', 0),
+(79, '123', 'johann', '', '', '09673620161', 'Brgy. Anastacia', 20, '2003-10-29', 'Medicine requires prescription', 5, '2023-09-26', 0),
+(83, '125', 'Nisha Arrogancia', '', '', '09500558967', 'SPC', 23, '2023-06-13', '', 0, '0000-00-00', 0),
+(86, '123', 'Anna', '', '', '09875784546', 'Brgy. Anastacia', 16, '2007-02-20', '', 0, '0000-00-00', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `expired_product`
+-- Table structure for table `heat_map`
 --
 
-CREATE TABLE `expired_product` (
-  `id` int(30) NOT NULL,
-  `product_id` int(30) NOT NULL,
-  `qty` int(30) NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `heat_map` (
+  `id` int(11) NOT NULL,
+  `brgy_name` varchar(50) NOT NULL,
+  `latitude` varchar(100) NOT NULL,
+  `longitude` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `inventory`
+-- Dumping data for table `heat_map`
 --
 
-CREATE TABLE `inventory` (
-  `id` int(30) NOT NULL,
-  `expiry_date` date NOT NULL,
-  `expired_confirmed` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `heat_map` (`id`, `brgy_name`, `latitude`, `longitude`) VALUES
+(32, 'Brgy. Anastacia', '13.965690', '121.353424'),
+(33, 'Brgy. Aquino', '13.970759', '121.292185'),
+(34, 'Brgy. Ayusan I', '13.978584', '121.318485'),
+(35, 'Brgy. Ayusan II', '13.978584', '121.318485'),
+(36, 'Brgy. Behia', '13.902670', '121.339922'),
+(37, 'Brgy. Bukal', '13.929922', '121.288786'),
+(38, 'Brgy. Bula', '13.924233', '121.308598'),
+(39, 'Brgy. Bulakin', '13.984925', '121.344018'),
+(40, 'Brgy. Cabatang', '13.970329', '121.382796'),
+(41, 'Brgy. Cabay', '13.883146', '121.374222'),
+(42, 'Brgy. Del Rosario', '13.855647', '121.385661'),
+(43, 'Brgy. Lagalag', '13.939658', '121.380212'),
+(44, 'Brgy. Lalig', '13.974496', '121.325106'),
+(45, 'Brgy. Lumingon', '13.957160', '121.330441'),
+(46, 'Brgy. Lusacan', '13.969073', '121.268100'),
+(47, 'Brgy. Paiisa', '13.887353', '121.369349'),
+(48, 'Brgy. Palagaran', '13.947533', '121.351114'),
+(49, 'Brgy. Poblacion I', '13.978784', '121.319584'),
+(50, 'Brgy. Poblacion II', '13.961516', '121.321343'),
+(51, 'Brgy. Poblacion III', '13.958693', '121.323436'),
+(52, 'Brgy. Poblacion IV', '13.961516', '121.321343'),
+(53, 'Brgy. Quipot', '13.954975', '121.320473'),
+(54, 'Brgy. San Agustin', '13.950362', '121.319606'),
+(55, 'Brgy. Isidro', '13.984962', '121.314118'),
+(56, 'Brgy. San Jose', '13.901753', '121.308890'),
+(57, 'Brgy. San Juan', '13.897659', '121.357094'),
+(58, 'Brgy. San Pedro', '13.967673', '121.308507'),
+(59, 'Brgy. Tagbakin', '13.913997', '121.362711'),
+(60, 'Brgy. Talisay', '13.945534', '121.359538'),
+(61, 'Brgy. Tamisian', '13.938505', '121.300002'),
+(62, 'Brgy. San Francisco', '13.892342', '121.349398');
 
 -- --------------------------------------------------------
 
@@ -126,6 +153,37 @@ INSERT INTO `item_description` (`id`, `name`) VALUES
 (6, 'Ciprofloxacin'),
 (7, 'Co-amox'),
 (8, 'Dicycloverine');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_requested`
+--
+
+CREATE TABLE `item_requested` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `availed_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `item_requested`
+--
+
+INSERT INTO `item_requested` (`id`, `patient_id`, `product_id`, `quantity`, `availed_date`) VALUES
+(4, 2, 123, 2, '2023-12-27'),
+(5, 2, 123, 2, '2023-12-27'),
+(6, 2, 123, 4, '2023-12-27'),
+(7, 2, 123, 3, '2023-12-27'),
+(8, 2, 123, 2, '2023-12-27'),
+(9, 2, 123, 1, '2023-12-27'),
+(10, 2, 123, 2, '2023-12-27'),
+(11, 2, 123, 8, '2023-12-27'),
+(12, 2, 123, 3, '2023-12-27'),
+(13, 2, 123, 18, '2023-12-29'),
+(14, 2, 129, 24, '2023-12-29');
 
 -- --------------------------------------------------------
 
@@ -185,6 +243,32 @@ INSERT INTO `manage_sub_category` (`id`, `category_id`, `sub_category_name`, `br
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `patient_list`
+--
+
+CREATE TABLE `patient_list` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `middle_initial` varchar(5) NOT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `birthdate` date NOT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `date_registered` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `patient_list`
+--
+
+INSERT INTO `patient_list` (`id`, `first_name`, `middle_initial`, `last_name`, `age`, `birthdate`, `contact_number`, `address`, `date_registered`) VALUES
+(2, 'Jonel', '', 'Naquita', 23, '2000-12-05', '09166931191', 'Brgy. Anastacia', '2023-12-19'),
+(18, 'Jerico', '', 'Naquita', 7, '2016-01-29', '09166931191', 'Brgy. Bula', '2023-12-29');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_list`
 --
 
@@ -207,16 +291,21 @@ CREATE TABLE `product_list` (
   `unit_measure` varchar(255) NOT NULL,
   `batch_no` varchar(255) NOT NULL,
   `brand` varchar(255) NOT NULL,
-  `shelf_no` int(11) NOT NULL
+  `shelf_no` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product_list`
 --
 
-INSERT INTO `product_list` (`id`, `category_id`, `type_id`, `item_id`, `supplier_id`, `customer_id`, `sub_category_id`, `sku`, `name`, `qty`, `dosage`, `dosage_form`, `prescription`, `date_added`, `date_expiry`, `unit_measure`, `batch_no`, `brand`, `shelf_no`) VALUES
-(115, '', 3, 0, 3, 0, 4, '', '', 50, '200mg/5ml', 'Solution', 1, '2023-11-23 12:45:26', '2023-11-30', 'Pieces', '2DB257', 'Generic', 2),
-(118, '', 8, 0, 5, 0, 1, '', '', 56, '200mg/5ml', 'Solution', 1, '2023-11-23 13:06:53', '2023-11-23', 'Bottle', '34rere', 'Generic', 2);
+INSERT INTO `product_list` (`id`, `category_id`, `type_id`, `item_id`, `supplier_id`, `customer_id`, `sub_category_id`, `sku`, `name`, `qty`, `dosage`, `dosage_form`, `prescription`, `date_added`, `date_expiry`, `unit_measure`, `batch_no`, `brand`, `shelf_no`, `status`) VALUES
+(115, '', 3, 0, 3, 0, 4, '', '', 50, '200mg/5ml', 'Solution', 1, '2023-11-23 12:45:26', '2023-11-30', 'Pieces', '2DB257', 'Generic', 2, 'Archived'),
+(123, '', 2, 0, 3, 0, 5, '', '', 3, '200mg/5ml', 'Solution', 0, '2023-12-11 17:26:24', '2024-11-12', 'PCS', '2023003', 'Generic', 5, ''),
+(125, '', 2, 0, 4, 0, 2, '', '', 10, '200mg/5ml', 'Solution', 1, '2023-12-11 17:37:10', '2024-02-01', 'Pcs', '4', 'Generic', 4, 'Archived'),
+(128, '', 2, 0, 4, 0, 2, '', '', 40, '200mg/5ml', 'Solution', 1, '2023-12-29 06:57:31', '2023-12-30', 'PCS', '3', 'Generic', 6, 'Archived'),
+(129, '', 2, 0, 5, 0, 2, '', '', 16, '200mg/5ml', 'Solution', 1, '2023-12-29 06:58:16', '2024-12-30', 'PCS', '3', 'Generic', 6, ''),
+(130, '', 2, 0, 5, 0, 7, '', '', 50, '200mg/5ml', 'Solution', 1, '2023-12-30 06:31:00', '2024-09-20', 'PCS', '3', 'Generic', 6, '');
 
 -- --------------------------------------------------------
 
@@ -258,6 +347,40 @@ INSERT INTO `sales_list` (`id`, `ref_no`, `customer_id`, `total_amount`, `amount
 (3, '74800422\n', 0, 200, 200, 0, '2020-10-08 13:42:29'),
 (4, '01966403\n', 0, 100, 100, 0, '2020-10-08 13:43:08'),
 (5, '16232790\n', 1, 250, 300, 50, '2020-10-09 08:19:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_out_items`
+--
+
+CREATE TABLE `stock_out_items` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `stock_out_date` date DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `status` enum('Expired','Requested') DEFAULT 'Expired'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stock_out_items`
+--
+
+INSERT INTO `stock_out_items` (`id`, `product_id`, `stock_out_date`, `quantity`, `status`) VALUES
+(1, 115, '2023-12-19', 50, 'Expired'),
+(2, 125, '2023-12-19', 10, 'Expired'),
+(5, 123, '2023-12-27', 2, 'Requested'),
+(6, 123, '2023-12-27', 2, 'Requested'),
+(7, 123, '2023-12-27', 4, 'Requested'),
+(8, 123, '2023-12-27', 3, 'Requested'),
+(9, 123, '2023-12-27', 2, 'Requested'),
+(10, 123, '2023-12-27', 1, 'Requested'),
+(11, 123, '2023-12-27', 2, 'Requested'),
+(12, 123, '2023-12-27', 8, 'Requested'),
+(13, 123, '2023-12-27', 3, 'Requested'),
+(14, 128, '2023-12-29', 40, 'Expired'),
+(15, 123, '2023-12-29', 18, 'Requested'),
+(16, 129, '2023-12-29', 24, 'Requested');
 
 -- --------------------------------------------------------
 
@@ -335,19 +458,69 @@ INSERT INTO `type_list` (`id`, `name`) VALUES
 CREATE TABLE `users` (
   `id` int(30) NOT NULL,
   `name` varchar(200) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT 2 COMMENT '1=admin , 2 = cashier',
-  `login_time` timestamp NOT NULL DEFAULT current_timestamp()
+  `login_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `code` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `type`, `login_time`) VALUES
-(1, 'Nisha', 'admin', 'admin123', 1, '2023-09-14 01:58:41'),
-(5, 'KENN', 'staff', 'ken123', 2, '2023-09-14 01:58:41');
+INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `type`, `login_time`, `code`) VALUES
+(1, 'Nisha', 'tiaongmunicipalhealthoffice@gmail.com', 'admin', 'c93ccd78b2076528346216b3b2f701e6', 1, '2023-09-14 01:58:41', ''),
+(5, 'KENN', '', 'staff', 'c93ccd78b2076528346216b3b2f701e6', 2, '2023-09-14 01:58:41', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_logs`
+--
+
+CREATE TABLE `user_logs` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `logs` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_logs`
+--
+
+INSERT INTO `user_logs` (`id`, `user_id`, `logs`, `date_added`) VALUES
+(6, 1, 'Nisha Login', '2023-12-11 20:00:34'),
+(7, 1, 'Nisha Login', '2023-12-12 03:02:46'),
+(9, 1, 'Nisha added a new item', '2023-12-12 03:07:09'),
+(10, 1, 'Nisha login', '2023-12-12 03:13:56'),
+(11, 1, 'Nisha login', '2023-12-12 03:14:33'),
+(12, 1, 'Nisha logout', '2023-12-12 03:24:15'),
+(13, 1, 'Nisha login', '2023-12-12 03:24:25'),
+(14, 1, 'Nisha logout', '2023-12-12 06:08:50'),
+(15, 1, 'Nisha login', '2023-12-12 06:12:31'),
+(16, 1, 'Nisha logout', '2023-12-12 06:12:34'),
+(17, 1, 'Nisha login', '2023-12-12 06:12:45'),
+(18, 1, 'Nisha logout', '2023-12-13 10:40:15'),
+(19, 1, 'Nisha login', '2023-12-13 10:41:37'),
+(20, 1, 'Nisha login', '2023-12-19 05:18:11'),
+(21, 1, 'Nisha logout', '2023-12-19 09:23:09'),
+(22, 1, 'Nisha login', '2023-12-19 09:27:38'),
+(23, 1, 'Nisha logout', '2023-12-19 09:27:42'),
+(24, 1, 'Nisha login', '2023-12-19 11:21:22'),
+(25, 1, 'Nisha logout', '2023-12-19 16:13:01'),
+(26, 1, 'Nisha login', '2023-12-27 09:25:02'),
+(27, 1, 'Nisha added a new item', '2023-12-29 14:57:31'),
+(28, 1, 'Nisha added a new item', '2023-12-29 14:58:16'),
+(29, 1, 'Nisha login', '2023-12-29 18:14:46'),
+(30, 1, 'Nisha login', '2023-12-30 10:54:43'),
+(31, 1, 'Nisha logout', '2023-12-30 11:43:57'),
+(32, 1, 'Nisha login', '2023-12-30 12:04:06'),
+(33, 1, 'Nisha logout', '2023-12-30 12:04:13'),
+(34, 1, 'Nisha login', '2023-12-30 14:19:10'),
+(35, 1, 'Nisha added a new item (Penicillins - Benzathine)', '2023-12-30 14:31:00');
 
 --
 -- Indexes for dumped tables
@@ -366,9 +539,9 @@ ALTER TABLE `customer_list`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `expired_product`
+-- Indexes for table `heat_map`
 --
-ALTER TABLE `expired_product`
+ALTER TABLE `heat_map`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -378,9 +551,23 @@ ALTER TABLE `item_description`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `item_requested`
+--
+ALTER TABLE `item_requested`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `patient_id` (`patient_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `manage_sub_category`
 --
 ALTER TABLE `manage_sub_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `patient_list`
+--
+ALTER TABLE `patient_list`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -400,6 +587,13 @@ ALTER TABLE `receiving_list`
 --
 ALTER TABLE `sales_list`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `stock_out_items`
+--
+ALTER TABLE `stock_out_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `supplier_list`
@@ -426,6 +620,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_logs`
+--
+ALTER TABLE `user_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -442,10 +642,10 @@ ALTER TABLE `customer_list`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
--- AUTO_INCREMENT for table `expired_product`
+-- AUTO_INCREMENT for table `heat_map`
 --
-ALTER TABLE `expired_product`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+ALTER TABLE `heat_map`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `item_description`
@@ -454,16 +654,28 @@ ALTER TABLE `item_description`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
+-- AUTO_INCREMENT for table `item_requested`
+--
+ALTER TABLE `item_requested`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `manage_sub_category`
 --
 ALTER TABLE `manage_sub_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
+-- AUTO_INCREMENT for table `patient_list`
+--
+ALTER TABLE `patient_list`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
 -- AUTO_INCREMENT for table `product_list`
 --
 ALTER TABLE `product_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `receiving_list`
@@ -476,6 +688,12 @@ ALTER TABLE `receiving_list`
 --
 ALTER TABLE `sales_list`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `stock_out_items`
+--
+ALTER TABLE `stock_out_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `supplier_list`
@@ -500,6 +718,29 @@ ALTER TABLE `type_list`
 --
 ALTER TABLE `users`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `user_logs`
+--
+ALTER TABLE `user_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `item_requested`
+--
+ALTER TABLE `item_requested`
+  ADD CONSTRAINT `item_requested_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient_list` (`id`),
+  ADD CONSTRAINT `item_requested_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product_list` (`id`);
+
+--
+-- Constraints for table `stock_out_items`
+--
+ALTER TABLE `stock_out_items`
+  ADD CONSTRAINT `stock_out_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_list` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
