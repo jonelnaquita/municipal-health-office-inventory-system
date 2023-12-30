@@ -78,7 +78,7 @@
 				<div class="card-header">
 					<h6>User Log</h6>
 				</div>
-				<div class="card-body" id="userLogBody">
+				<div class="card-body" id="userLogBody" style="max-height: 500px; overflow-y: auto;">
 					<!-- User logs will be displayed here -->
 				</div>
 			</div>

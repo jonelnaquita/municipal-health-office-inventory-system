@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
               WHERE id = $id";
 
     if ($conn->query($query) === TRUE) {
+        
         echo 1; // Success
     } else {
         echo 'Error: ' . $conn->error;

@@ -6,6 +6,7 @@
     }
   </style>
 
+  <link rel="icon" href="assets/img/mho.png" type="image/x-icon">
   
 
   <!-- Google Fonts -->
@@ -62,6 +63,8 @@
   <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
   <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -99,6 +102,11 @@ $(document).ready(function() {
             'csvHtml5',
             'pdfHtml5',
             {
+                extend: 'pdfFlash',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            },
+            {
                 extend: 'print',
                 text: 'Print all',
                 exportOptions: {
@@ -106,7 +114,7 @@ $(document).ready(function() {
                         selected: null
                     },
                     columns: ':visible'
-                }
+                },
             },
             {
                 extend: 'print',

@@ -29,25 +29,21 @@
 	<div class="row">
 		<div class="col-md-4 login-sec">
 		    <h2 class="text-center">Login</h2>
-		    <form class="login-form" id="login-form">
+		    <form class="login-form" id="reset-form">
                 <div class="form-group">
-                    <label for="exampleInputEmail1" class="text-uppercase">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-                    
+                    <label for="new-password" class="text-uppercase">New Password</label>
+                    <input type="password" class="form-control" id="new-password" name="new-password" placeholder="New Password">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1" class="text-uppercase">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    <label for="confirm-password" class="text-uppercase">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm Password">
                 </div>
-
-                    <div class="form-check">
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                <div class="form-check">
+                    <button type="button" class="btn btn-primary float-right" onclick="resetPassword()">Submit</button>
                 </div>
-                
             </form>
-            <div class="form-group">
-                <a href="forgot_password.php" data-toggle="modal" data-target="#forgotPasswordModal">Forgot Password?</a>
-            </div>
+
+
 		</div>
 		<div class="col-md-8 banner-sec">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -69,32 +65,39 @@
 </body>
 
 <script>
-	$('#login-form').submit(function(e){
-		e.preventDefault()
-		$('#login-form button[type="button"]').attr('disabled',true).html('Logging in...');
-		if($(this).find('.alert-danger').length > 0 )
-			$(this).find('.alert-danger').remove();
-		$.ajax({
-			url:'ajax.php?action=login',
-			method:'POST',
-			data:$(this).serialize(),
-			error:err=>{
-				console.log(err)
-		$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
+    function resetPassword() {
+        var newPassword = $('#new-password').val();
+        var confirmPassword = $('#confirm-password').val();
+        var resetCode = '<?php echo isset($_GET['reset']) ? urldecode($_GET['reset']) : ''; ?>'; // URL-decode the reset code
 
-			},
-			success:function(resp){
-				if(resp == 1){
-					location.href ='index.php?page=home';
-				}else if(resp == 2){
-					location.href ='voting.php';
-				}else{
-					$('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
-					$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
-				}
-			}
-		})
-	})
-</script>	
+        if (newPassword === confirmPassword) {
+            $.ajax({
+                type: 'POST',
+                url: 'process_change_password.php',
+                data: {
+                    newPassword: newPassword,
+                    confirmPassword: confirmPassword,
+                    resetCode: resetCode
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        alert('Password successfully reset. You can now login with your new password.');
+                        window.location.href = 'index.php'; // Redirect to the login page or any other page
+                    } else {
+                        alert('Error: ' + response.error);
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while processing your request.');
+                }
+            });
+        } else {
+            alert('New Password and Confirm Password do not match.');
+        }
+    }
+</script>
+
+
 
 </html>

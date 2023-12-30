@@ -17,33 +17,47 @@ Class Action {
 
 	function login(){
 		extract($_POST);
-		$qry = $this->db->query("SELECT * FROM users WHERE username = '".$username."' AND password = '".$password."' ");
 	
-		if($qry->num_rows > 0){
-			$user = $qry->fetch_assoc();
-			date_default_timezone_set('Asia/Manila');
-			// Save user log
-			$log_data = array(
-				'user_id' => $user['id'],
-				'logs' => $user['name'] . ' login',
-				'date_added' => date('Y-m-d H:i:s')
-			);
+		// Use prepared statement to prevent SQL injection
+		$stmt = $this->db->prepare("SELECT * FROM users WHERE username = ?");
+		$stmt->bind_param("s", $username);
+		$stmt->execute();
+		$result = $stmt->get_result();
 	
-			$this->saveUserLog($log_data);
-			
-			$_SESSION['userSession'] = $user['id'];
-
-			// Set session variables
-			foreach ($user as $key => $value) {
-				if ($key != 'password' && !is_numeric($key))
-					$_SESSION['login_'.$key] = $value;
+		if($result->num_rows > 0){
+			$user = $result->fetch_assoc();
+	
+			// Verify the hashed password using md5
+			if (md5($password) === $user['password']) {
+				date_default_timezone_set('Asia/Manila');
+	
+				// Save user log
+				$log_data = array(
+					'user_id' => $user['id'],
+					'logs' => $user['name'] . ' login',
+					'date_added' => date('Y-m-d H:i:s')
+				);
+	
+				$this->saveUserLog($log_data);
+	
+				$_SESSION['userSession'] = $user['id'];
+	
+				// Set session variables
+				foreach ($user as $key => $value) {
+					if ($key != 'password' && !is_numeric($key))
+						$_SESSION['login_'.$key] = $value;
+				}
+	
+				return 1;
+			} else {
+				return 3; // Password does not match
 			}
-	
-			return 1;
 		} else {
-			return 3;
+			return 3; // User not found
 		}
 	}
+	
+	
 
 	function saveUserLog($data) {
 		$columns = implode(", ", array_keys($data));
@@ -294,6 +308,10 @@ Class Action {
 
 	function save_product(){
 		extract($_POST);
+
+		// Fetch sub_category_name and brand_name based on sub_category_id
+		$subcategory_info = $this->db->query("SELECT sub_category_name, brand_name FROM manage_sub_category WHERE id = '$sub_category_id'");
+		$subcategory_data = $subcategory_info->fetch_assoc();
 	
 		$data = " dosage_form = '$dosage_form' ";
 		$data .= ", brand = '$brand' ";
@@ -318,9 +336,10 @@ Class Action {
 			// Log the addition of a new item
 			if ($save) {
 				date_default_timezone_set('Asia/Manila');
+
 				$log_data = array(
-					'user_id' => $_SESSION['userSession'], // Assuming you have a user_id in your session
-					'logs' => $_SESSION['login_name'] . ' added a new item',
+					'user_id' => $_SESSION['userSession'],
+					'logs' => $_SESSION['login_name'] . ' added a new item (' . $subcategory_data['sub_category_name'] . ' - ' . $subcategory_data['brand_name'] . ')',
 					'date_added' => date('Y-m-d H:i:s')
 				);
 	

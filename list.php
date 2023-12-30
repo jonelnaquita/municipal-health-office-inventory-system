@@ -22,6 +22,8 @@ while ($row = $expiredProducts->fetch_assoc()) {
 $conn->close();
 ?>
 
+
+
 <div class="container-fluid">
   <div class="row">
     <div class="card col-lg-12">
@@ -153,10 +155,6 @@ $conn->close();
 							<i class="fas fa-plus"></i> 
 							Add Stocks
 						</a>
-						<!--<a class="dropdown-item delete_product" href="javascript:void(0)" data-id = '<?php echo $row['id'] ?>'>
-							<i class="fas fa-trash"></i>
-							Delete
-						</a>-->
 						</div>
 					</div>
 				 	</td>
@@ -184,9 +182,30 @@ $('#new_product').click(function(){
 		responsive: true,
         dom: 'Bfrtip',
         buttons: [
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5',
+            {
+                extend: 'excelHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] // Include the first and third columns
+                },
+            },
+            {
+                extend: 'csvHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] // Include the first and third columns
+                },
+            },
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] // Include the first and third columns
+                },
+            },
             {
                 extend: 'print',
                 text: 'Print all',
@@ -194,12 +213,15 @@ $('#new_product').click(function(){
                     modifier: { 
                         selected: null
                     },
-                    columns: ':visible'
-                }
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] // Include the first and third columns
+                },
             },
             {
                 extend: 'print',
                 text: 'Print selected'
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] // Include the first and third columns
+                },
             },
             'colvis'
         ],
