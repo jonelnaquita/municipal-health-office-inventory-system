@@ -99,20 +99,38 @@ Class Action {
 
 	function save_user(){
 		extract($_POST);
+	
+		// Check if it's an existing user
+		if (!empty($id)) {
+			// Fetch the existing user's data
+			$user = $this->db->query("SELECT * FROM users WHERE id = $id")->fetch_assoc();
+	
+			// Check if the provided password matches the stored password
+			if (md5($password) !== $user['password']) {
+				return 2;
+			}
+		}
+	
 		$data = " name = '$name' ";
 		$data .= ", username = '$username' ";
-		$data .= ", password = '$password' ";
-		if(isset($type))
-		$data .= ", type = '$type' ";
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO users set ".$data);
-		}else{
-			$save = $this->db->query("UPDATE users set ".$data." where id = ".$id);
+		// Only update the password if a new one is provided
+		if (!empty($password)) {
+			$data .= ", password = '".md5($password)."' ";
 		}
+		if (isset($type))
+			$data .= ", type = '$type' ";
+	
+		if (empty($id)){
+			$save = $this->db->query("INSERT INTO users SET ".$data);
+		} else {
+			$save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
+		}
+	
 		if($save){
 			return 1;
 		}
 	}
+	
 
 	function signup(){
 		extract($_POST);

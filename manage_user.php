@@ -8,12 +8,10 @@ foreach($user->fetch_array() as $k =>$v){
 }
 
 ?>
-<div class="container-fluid">
+<div class="container">
 	
 	<form action="" id="manage-user">
 		<input type="hidden" name="id" value="<?php echo isset($meta['id']) ? $meta['id']: '' ?>">
-
-		
 			
 		<div class="form-group">
 			<label for="name">Name</label>
@@ -25,8 +23,8 @@ foreach($user->fetch_array() as $k =>$v){
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label>
-			<input type="password" name="password" id="password" class="form-control" value="<?php echo isset($meta['password']) ? $meta['password']: '' ?>" required="">
-			</div>
+			<input type="password" name="password" id="password" class="form-control" value="" required="">
+		</div>
 			<?php if(!isset($_GET['mtype'])): ?>
 		<div class="form-group">
 			<label for="type">User Type</label>
@@ -38,14 +36,14 @@ foreach($user->fetch_array() as $k =>$v){
 		<?php endif; ?>
 		
 
-						<div class="card-footer">
-						<div class="row">
-							<div class="col-md-12">
-								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Save</button>
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							</div>
-						</div>
-					</div>
+		<div class="card-footer">
+		<div class="row">
+			<div class="col-md-12">
+				<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Save</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
 
 <!--<div class="form-group">
 <label for="category_id">Category</label>
@@ -114,6 +112,12 @@ $("#parentbox").change(function()
 			success:function(resp){
 				if(resp ==1){
 					alert_toast("Data successfully saved",'success')
+					setTimeout(function(){
+						location.reload()
+					},1500)
+				}
+				else if(resp ==2){
+					alert_toast("Incorrect Password",'danger')
 					setTimeout(function(){
 						location.reload()
 					},1500)
