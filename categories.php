@@ -40,7 +40,7 @@
 						<b>Category List</b>
 					</div>
 					<div class="card-body">
-						<table id="table" class="table table-bordered table-hover">
+						<table id="tableCategory" class="table table-bordered table-hover">
 							<thead>
 								<tr>
 									<th class="text-center">#</th>
@@ -83,6 +83,58 @@
 		vertical-align: middle !important;
 	}
 </style>
+
+<script>
+$(document).ready(function() {
+    $('#tableCategory').DataTable( {
+      responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5',
+            {
+                extend: 'pdfFlash',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            },
+            {
+                extend: 'print',
+                text: 'Print all',
+                exportOptions: {
+                    modifier: { 
+                        selected: null
+                    },
+                    columns: ':visible'
+                },
+            },
+            {
+                extend: 'print',
+                text: 'Print selected'
+            },
+            'colvis'
+        ],
+        select: true,
+        columnDefs: [ {
+            targets: -0,
+            visible: false
+        } ]
+    } );
+
+	$('.edit_cat').click(function(){
+		start_load()
+		var cat = $('#manage-category')
+		cat.get(0).reset()
+		cat.find("[name='id']").val($(this).attr('data-id'))
+		cat.find("[name='name']").val($(this).attr('data-name'))
+		end_load()
+	})
+	$('.delete_cat').click(function(){
+		_conf("Are you sure to delete this category?","delete_cat",[$(this).attr('data-id')])
+	})
+} );
+</script>
+
 <script>
 	
 	$('#manage-category').submit(function(e){
@@ -113,17 +165,6 @@
 				}
 			}
 		})
-	})
-	$('.edit_cat').click(function(){
-		start_load()
-		var cat = $('#manage-category')
-		cat.get(0).reset()
-		cat.find("[name='id']").val($(this).attr('data-id'))
-		cat.find("[name='name']").val($(this).attr('data-name'))
-		end_load()
-	})
-	$('.delete_cat').click(function(){
-		_conf("Are you sure to delete this category?","delete_cat",[$(this).attr('data-id')])
 	})
 	function delete_cat($id){
 		start_load()

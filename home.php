@@ -12,13 +12,13 @@ function displayExpiredProducts($conn)
         SELECT p.*, sc.sub_category_name, sc.brand_name 
         FROM product_list p 
         INNER JOIN manage_sub_category sc ON p.sub_category_id = sc.id 
-        WHERE date(p.date_expiry) <= '$currentDate' OR date(p.date_expiry) BETWEEN '$currentDate' AND DATE_ADD('$currentDate', INTERVAL 3 MONTH)
+        WHERE date(p.date_expiry) BETWEEN '$currentDate' AND DATE_ADD('$currentDate', INTERVAL 3 MONTH)
     ");
 
     ?>
     <div class="card">
         <div class="card-header">
-            Expired Product
+            Near to Expire Product
         </div>
         <div class="card-body">
             <?php while ($row = $expiredProducts->fetch_array()) : ?>

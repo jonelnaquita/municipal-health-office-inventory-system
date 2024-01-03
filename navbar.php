@@ -36,6 +36,7 @@
             <div class=" dd">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Medicine</a>
                 <div class="dropdown-menu">
+                    <a class="dropdown-item" href="index.php?page=types"><i class="fa fa-th-list"></i> Brand</a>
                     <a class="dropdown-item" href="index.php?page=categories"><i class="fa fa-list"></i> Category</a>
                     <a class="dropdown-item" href="index.php?page=types"><i class="fa fa-th-list"></i> Types</a>
                 </div>
